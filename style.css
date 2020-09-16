@@ -1,0 +1,35 @@
+:root {
+    --studentcolor1: gray;
+    --studentcolor2: lightgray;
+
+}
+
+
+.templatesgohere {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.singlestudent {
+    padding: 2em;
+    margin: 1em
+}
+
+.singlestudent:nth-child(odd) {
+    background-color: var(--studentcolor1);
+
+}
+
+.singlestudent:nth-child(even) {
+    background-color: var(--studentcolor2);
+
+}
+
+.sorting {
+    display: flex;
+}
+
+.filtering {
+    display: flex;
+
+}
