@@ -2,6 +2,16 @@
 
 window.addEventListener("DOMContentLoaded", start);
 
+let counter = 0
+
+document.querySelector("button#sortfirstname").onclick = function () {
+    counter += 1;
+
+}
+document.querySelector("button#sortlastname").onclick = function () {
+    counter += 1;
+
+}
 
 let allstudents = []
 
@@ -32,19 +42,16 @@ function start() {
 
 
 
-    // document.querySelector("button#sortfirstname").addEventListener("click", sortfirstname)
-    // document.querySelector("button#sortsecondname").addEventListener("click", sortsecondname)
-    // document.querySelector("button#sortlastname").addEventListener("click", sortlastname)
-    // document.querySelector("button#sortgender").addEventListener("click", sortgender);
-    // document.querySelector("button#sorthouse").addEventListener("click", sorthouse);
+    document.querySelector("button#sortfirstname").addEventListener("click", sortfirstname)
+
+    document.querySelector("button#sortlastname").addEventListener("click", sortlastname)
+
 
     document.querySelector("button#filterall").addEventListener("click", loadJSON)
     document.querySelector("button#filterRavenclaw").addEventListener("click", filterRavenclaw)
     document.querySelector("button#filterHufflepuff").addEventListener("click", filterHufflepuff)
     document.querySelector("button#filterSlytherin").addEventListener("click", filterSlytherin)
     document.querySelector("button#filterGryffindor").addEventListener("click", filterGryffindor)
-    document.querySelector("button#filterBoys").addEventListener("click", filterBoys)
-    document.querySelector("button#filterGirls").addEventListener("click", filterGirls)
     document.querySelector("button#filterExpelled").addEventListener("click", filterExpelled)
     loadJSON()
 }
@@ -136,6 +143,8 @@ function displayList(student) {
 
     // build a new list
     student.forEach(displaystudents);
+
+    countstudents()
 }
 
 
@@ -174,6 +183,27 @@ function displaystudents(student) {
 }
 
 
+function countstudents() {
+
+
+
+    let raven = allstudents.filter(student => student.house === "Ravenclaw")
+    let huff = allstudents.filter(student => student.house === "Hufflepuff")
+    let gryf = allstudents.filter(student => student.house === "Slytherin")
+    let sly = allstudents.filter(student => student.house === "Gryffindor")
+    let expelled = allstudents.filter(student => student.expelled === true)
+
+    document.querySelector("#all").innerHTML = `Students in total: ${allstudents.length}`
+    document.querySelector("#raven").innerHTML = `Ravenclaw students: ${raven.length}`
+    document.querySelector("#huff").innerHTML = `Hufflepuff students: ${huff.length}`
+    document.querySelector("#gryf").innerHTML = `Gryffindor students: ${gryf.length}`
+    document.querySelector("#sly").innerHTML = `Slytherin students: ${sly.length}`
+    document.querySelector("#expelled").innerHTML = `Expelled students: ${expelled.length}`
+
+
+}
+
+
 function filterRavenclaw() {
 
     document.querySelector("div.templatesgohere").innerHTML = "";
@@ -202,23 +232,182 @@ function filterGryffindor() {
     raven.forEach(displaystudents);
 }
 
-function filterBoys() {
-
-    document.querySelector("div.templatesgohere").innerHTML = "";
-    let raven = allstudents.filter(student => student.gender === "boy")
-    raven.forEach(displaystudents);
-}
-
-function filterGirls() {
-
-    document.querySelector("div.templatesgohere").innerHTML = "";
-    let raven = allstudents.filter(student => student.gender === "girl")
-    raven.forEach(displaystudents);
-}
 
 function filterExpelled() {
 
     document.querySelector("div.templatesgohere").innerHTML = "";
     let raven = allstudents.filter(student => student.expelled === true)
     raven.forEach(displaystudents);
+}
+
+
+
+function compareNameascending(a, b) {
+    if (a.firstname < b.firstname) {
+        return -1
+    } else {
+        return 1
+    }
+}
+
+function compareNamedescending(a, b) {
+    if (a.firstname > b.firstname) {
+        return -1
+    } else {
+        return 1
+    }
+}
+
+
+function comparelastNameascending(a, b) {
+    if (a.lastname < b.lastname) {
+        return -1
+    } else {
+        return 1
+    }
+}
+
+function comparelastNamedescending(a, b) {
+    if (a.lastname > b.lastname) {
+        return -1
+    } else {
+        return 1
+    }
+}
+
+
+
+
+function sortfirstname() {
+
+
+    if (document.querySelector("button#filterRavenclaw").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let raven = allstudents.filter(student => student.house === "Ravenclaw")
+        if (counter === 1) {
+            raven.sort(compareNameascending)
+        } else if (counter === 2) {
+            raven.sort(compareNamedescending)
+            counter = 0
+        }
+        raven.forEach(displaystudents);
+    } else if (document.querySelector("button#filterHufflepuff").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let huff = allstudents.filter(student => student.house === "Hufflepuff")
+        if (counter === 1) {
+            huff.sort(compareNameascending)
+        } else if (counter === 2) {
+            huff.sort(compareNamedescending)
+            counter = 0
+        }
+        huff.forEach(displaystudents);
+    } else if (document.querySelector("button#filterSlytherin").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let sly = allstudents.filter(student => student.house === "Slytherin")
+        if (counter === 1) {
+            sly.sort(compareNameascending)
+        } else if (counter === 2) {
+            sly.sort(compareNamedescending)
+            counter = 0
+        }
+        sly.forEach(displaystudents);
+    } else if (document.querySelector("button#filterGryffindor").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let gryf = allstudents.filter(student => student.house === "Gryffindor")
+        if (counter === 1) {
+            gryf.sort(compareNameascending)
+        } else if (counter === 2) {
+            gryf.sort(compareNamedescending)
+            counter = 0
+        }
+        gryf.forEach(displaystudents);
+    } else if (document.querySelector("button#filterExpelled").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let expelled = allstudents.filter(student => student.expelled === true)
+        if (counter === 1) {
+            expelled.sort(compareNameascending)
+        } else if (counter === 2) {
+            expelled.sort(compareNamedescending)
+            counter = 0
+        }
+        expelled.forEach(displaystudents);
+    } else {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        if (counter === 1) {
+            allstudents.sort(compareNameascending)
+        } else if (counter === 2) {
+            allstudents.sort(compareNamedescending)
+            counter = 0
+        }
+        allstudents.forEach(displaystudents);
+    }
+
+
+
+}
+
+function sortlastname() {
+    if (document.querySelector("button#filterRavenclaw").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let raven = allstudents.filter(student => student.house === "Ravenclaw")
+        if (counter === 1) {
+            raven.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            raven.sort(comparelastNamedescending)
+            counter = 0
+        }
+        raven.forEach(displaystudents);
+    } else if (document.querySelector("button#filterHufflepuff").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let huff = allstudents.filter(student => student.house === "Hufflepuff")
+        if (counter === 1) {
+            huff.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            huff.sort(comparelastNamedescending)
+            counter = 0
+        }
+        huff.forEach(displaystudents);
+    } else if (document.querySelector("button#filterSlytherin").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let sly = allstudents.filter(student => student.house === "Slytherin")
+        if (counter === 1) {
+            sly.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            sly.sort(comparelastNamedescending)
+            counter = 0
+        }
+        sly.forEach(displaystudents);
+    } else if (document.querySelector("button#filterGryffindor").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let gryf = allstudents.filter(student => student.house === "Gryffindor")
+        if (counter === 1) {
+            gryf.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            gryf.sort(comparelastNamedescending)
+            counter = 0
+        }
+        gryf.forEach(displaystudents);
+    } else if (document.querySelector("button#filterExpelled").className == "active") {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        let expelled = allstudents.filter(student => student.expelled === true)
+        if (counter === 1) {
+            expelled.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            expelled.sort(comparelastNamedescending)
+            counter = 0
+        }
+        expelled.forEach(displaystudents);
+    } else {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        if (counter === 1) {
+            allstudents.sort(comparelastNameascending)
+        } else if (counter === 2) {
+            allstudents.sort(comparelastNamedescending)
+            counter = 0
+        }
+        allstudents.forEach(displaystudents);
+    }
+
+
+
 }
