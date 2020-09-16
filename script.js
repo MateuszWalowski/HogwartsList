@@ -10,10 +10,26 @@ let students = {
     middlename: "",
     lastname: "",
     house: "",
-    studentgender: ""
+    studentgender: "",
+    expelled: false
 };
 
 function start() {
+
+    document.querySelectorAll(".filtering button").forEach(button => {
+        button.addEventListener('click', function () {
+            chooseactivebutton(button)
+            return button
+        })
+    }, );
+
+    function chooseactivebutton(button) {
+        document.querySelectorAll("button").forEach(button => {
+            button.classList.remove("active")
+        }, );
+        button.classList.add("active")
+    }
+
 
 
     // document.querySelector("button#sortfirstname").addEventListener("click", sortfirstname)
@@ -22,14 +38,14 @@ function start() {
     // document.querySelector("button#sortgender").addEventListener("click", sortgender);
     // document.querySelector("button#sorthouse").addEventListener("click", sorthouse);
 
-    // document.querySelector("button#filterall").addEventListener("click", showall)
-    // document.querySelector("button#filterRavenclaw").addEventListener("click", filterdogs)
-    // document.querySelector("button#filterHufflepuff").addEventListener("click", loadJSON)
-    // document.querySelector("button#filterSlytherin").addEventListener("click", loadJSON)
-    // document.querySelector("button#filterGryffindor").addEventListener("click", loadJSON)
-    // document.querySelector("button#filterBoys").addEventListener("click", loadJSON)
-    // document.querySelector("button#filterGirls").addEventListener("click", loadJSON)
-    // document.querySelector("button#filterExpelled").addEventListener("click", loadJSON)
+    document.querySelector("button#filterall").addEventListener("click", loadJSON)
+    document.querySelector("button#filterRavenclaw").addEventListener("click", filterRavenclaw)
+    document.querySelector("button#filterHufflepuff").addEventListener("click", filterHufflepuff)
+    document.querySelector("button#filterSlytherin").addEventListener("click", filterSlytherin)
+    document.querySelector("button#filterGryffindor").addEventListener("click", filterGryffindor)
+    document.querySelector("button#filterBoys").addEventListener("click", filterBoys)
+    document.querySelector("button#filterGirls").addEventListener("click", filterGirls)
+    document.querySelector("button#filterExpelled").addEventListener("click", filterExpelled)
     loadJSON()
 }
 
@@ -108,7 +124,7 @@ function preapareObject(jsonObject) {
         newstudent.house = housefixed
     }
 
-    console.log(newstudent)
+    // console.log(newstudent)
     allstudents.push(newstudent)
     // console.log(allstudents)
     return newstudent
@@ -155,4 +171,54 @@ function displaystudents(student) {
     document.querySelector(".templatesgohere").appendChild(clone);
 
 
+}
+
+
+function filterRavenclaw() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.house === "Ravenclaw")
+    raven.forEach(displaystudents);
+}
+
+function filterHufflepuff() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.house === "Hufflepuff")
+    raven.forEach(displaystudents);
+}
+
+function filterSlytherin() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.house === "Slytherin")
+    raven.forEach(displaystudents);
+}
+
+function filterGryffindor() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.house === "Gryffindor")
+    raven.forEach(displaystudents);
+}
+
+function filterBoys() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.gender === "boy")
+    raven.forEach(displaystudents);
+}
+
+function filterGirls() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.gender === "girl")
+    raven.forEach(displaystudents);
+}
+
+function filterExpelled() {
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+    let raven = allstudents.filter(student => student.expelled === true)
+    raven.forEach(displaystudents);
 }
