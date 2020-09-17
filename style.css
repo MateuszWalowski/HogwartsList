@@ -1,7 +1,8 @@
 :root {
     --studentcolor1: gray;
     --studentcolor2: lightgray;
-
+    --primary-color: #7f0909;
+    --secondary-color: #ffc500;
 }
 
 
@@ -36,4 +37,62 @@
 
 .active {
     background-color: red;
+}
+
+
+.modal-background {
+    position: fixed;
+    overflow-y: scroll;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#modal-content {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: 1px solid #7c1f17;
+    margin: 1em;
+    padding: 2em;
+}
+
+
+#closemodal {
+    cursor: pointer;
+    float: right;
+    position: relative;
+    bottom: 3vh;
+    color: black;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    font-size: 3em;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.Ravenclaw {
+    --primary-color: #a10f0f;
+    --secondary-color: #db7d2f;
+}
+
+.Hufflepuff {
+    --primary-color: #96D5E2;
+    --secondary-color: #292B15;
+}
+
+.Gryffindor {
+    --primary-color: #3D5914;
+    --secondary-color: #A66073;
+}
+
+.Slytherin {
+    --primary-color: #5E5D63;
+    --secondary-color: #D9B89C;
+}
+
+.hide {
+    display: none;
 }

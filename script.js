@@ -12,6 +12,7 @@ document.querySelector("button#sortlastname").onclick = function () {
     counter += 1;
 
 }
+const modal = document.querySelector(".modal-background");
 
 let allstudents = []
 
@@ -21,6 +22,7 @@ let students = {
     lastname: "",
     house: "",
     studentgender: "",
+    bloodstatus: "",
     expelled: false
 };
 
@@ -133,7 +135,7 @@ function preapareObject(jsonObject) {
 
     // console.log(newstudent)
     allstudents.push(newstudent)
-    // console.log(allstudents)
+    console.log(allstudents)
     return newstudent
 }
 
@@ -177,7 +179,74 @@ function displaystudents(student) {
 
     }
 
+    clone.querySelector(".studentimage").alt = student.firstname + " " + student.lastname
+
+    clone.querySelector(".singlestudent").addEventListener("click", () => {
+        console.log("click", student);
+        modal.classList.remove("hide");
+
+        modal.querySelector("#firstnamemodal").textContent = student.firstname;
+        modal.querySelector("#middlenamemodal").textContent = student.middlename;
+        modal.querySelector("#lastnamemodal").textContent = student.lastname;
+        modal.querySelector("#housemodal").textContent = student.house;
+        modal.querySelector("#studentgendermodal").textContent = student.gender;
+        modal.querySelector("#bloodstatusmodal").textContent = student.bloodstatus;
+        modal.querySelector("#expelledmodal").textContent = student.expelled;
+
+
+        modal.querySelector("#imagemodal").src = `./images/${student.lastname.toLowerCase()}_${student.firstname.substring(0,1).toLowerCase()}.png`;
+
+        if (student.lastname == "Finch-fletchley") {
+            modal.querySelector("#imagemodal").src = `./images/fletchley_j.png`
+        } else if (student.lastname == "Patil" && student.firstname == "Parvati") {
+            modal.querySelector("#imagemodal").src = `./images/patil_parvati.png`
+
+        } else if (student.lastname == "Patil" && student.firstname == "Padma") {
+            modal.querySelector("#imagemodal").src = `./images/patil_padma.png`
+
+
+        } else if (student.firstname == "Leanne") {
+            modal.querySelector("#imagemodal").src = `./images/default.png`
+
+        }
+
+        modal.querySelector("#imagemodal").alt = student.firstname + " " + student.lastname
+
+
+        if (student.house == 'Ravenclaw') {
+            document.querySelector("#modal-content").classList.remove("Hufflepuff");
+            document.querySelector("#modal-content").classList.remove("Slytherin");
+            document.querySelector("#modal-content").classList.remove("Gryffindor");
+            document.querySelector("#modal-content").classList.add("Ravenclaw");
+        } else if (student.house == 'Hufflepuff') {
+            document.querySelector("#modal-content").classList.remove("Gryffindor");
+            document.querySelector("#modal-content").classList.remove("Ravenclaw");
+            document.querySelector("#modal-content").classList.remove("Slytherin");
+            document.querySelector("#modal-content").classList.add("Hufflepuff");
+        } else if (student.house == 'Gryffindor') {
+            document.querySelector("#modal-content").classList.remove("Hufflepuff");
+            document.querySelector("#modal-content").classList.remove("Ravenclaw");
+            document.querySelector("#modal-content").classList.remove("Slytherin");
+            document.querySelector("#modal-content").classList.add("Gryffindor");
+        } else if (student.house == 'Slytherin') {
+            document.querySelector("#modal-content").classList.remove("Hufflepuff");
+            document.querySelector("#modal-content").classList.remove("Ravenclaw");
+            document.querySelector("#modal-content").classList.remove("Gryffindor");
+            document.querySelector("#modal-content").classList.add("Slytherin");
+        }
+    });
+
+
+
     document.querySelector(".templatesgohere").appendChild(clone);
+
+
+
+
+    const closemodal = document.querySelector("#closemodal");
+    closemodal.addEventListener("click", () => {
+        document.querySelector(".modal-background").classList.add("hide");
+    });
 
 
 }
