@@ -1,19 +1,23 @@
 :root {
     --studentcolor1: gray;
     --studentcolor2: lightgray;
-    --primary-color: #7f0909;
-    --secondary-color: #ffc500;
+    --primary-color: black;
+    --secondary-color: black;
 }
 
+* {
+    font-family: sans-serif;
+}
 
 .templatesgohere {
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .singlestudent {
-    padding: 2em;
-    margin: 1em
+    padding: 1em;
+    margin: 0.8em
 }
 
 .singlestudent:nth-child(odd) {
@@ -26,18 +30,19 @@
 
 }
 
-.sorting {
-    display: flex;
-}
-
+.sorting,
 .filtering {
     display: flex;
+}
+
+.sorting>*,
+.filtering>* {
+    padding: 0.5em;
+    margin: 0.5em;
 
 }
 
-.active {
-    background-color: red;
-}
+
 
 
 .modal-background {
@@ -74,25 +79,35 @@
 }
 
 .Ravenclaw {
-    --primary-color: #a10f0f;
-    --secondary-color: #db7d2f;
+    --primary-color: #04121B;
+    --secondary-color: #A67A53;
 }
 
 .Hufflepuff {
-    --primary-color: #96D5E2;
-    --secondary-color: #292B15;
+    --primary-color: #F3DE0B;
+    --secondary-color: #0A0A0A;
 }
 
 .Gryffindor {
-    --primary-color: #3D5914;
-    --secondary-color: #A66073;
+    --primary-color: #4D0506;
+    --secondary-color: #B79114;
 }
 
 .Slytherin {
-    --primary-color: #5E5D63;
-    --secondary-color: #D9B89C;
+    --primary-color: #9E9996;
+    --secondary-color: #234723;
 }
 
 .hide {
     display: none;
+}
+
+.numbers {
+    display: flex
+}
+
+.numbers p {
+    border: 0.5px solid black;
+    margin: 1em;
+    padding: 0.2em
 }

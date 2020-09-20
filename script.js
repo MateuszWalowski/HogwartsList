@@ -15,6 +15,7 @@ document.querySelector("button#sortlastname").onclick = function () {
 const modal = document.querySelector(".modal-background");
 
 let allstudents = []
+let expelledstudents = []
 
 let students = {
     firstname: "",
@@ -43,13 +44,12 @@ function start() {
     }
 
 
-
     document.querySelector("button#sortfirstname").addEventListener("click", sortfirstname)
-
     document.querySelector("button#sortlastname").addEventListener("click", sortlastname)
-
-
-    document.querySelector("button#filterall").addEventListener("click", loadJSON)
+    document.querySelector("button#filterall").addEventListener("click", function () {
+        document.querySelector("div.templatesgohere").innerHTML = "";
+        allstudents.forEach(displaystudents);
+    })
     document.querySelector("button#filterRavenclaw").addEventListener("click", filterRavenclaw)
     document.querySelector("button#filterHufflepuff").addEventListener("click", filterHufflepuff)
     document.querySelector("button#filterSlytherin").addEventListener("click", filterSlytherin)
@@ -135,7 +135,7 @@ function preapareObject(jsonObject) {
 
     // console.log(newstudent)
     allstudents.push(newstudent)
-    console.log(allstudents)
+    // console.log(allstudents)
     return newstudent
 }
 
@@ -144,7 +144,7 @@ function displayList(student) {
     document.querySelector("div.templatesgohere").innerHTML = "";
 
     // build a new list
-    student.forEach(displaystudents);
+    allstudents.forEach(displaystudents);
 
     countstudents()
 }
@@ -162,7 +162,6 @@ function displaystudents(student) {
     clone.querySelector(".lastname").textContent = student.lastname;
     clone.querySelector(".gender").textContent = student.gender;
     clone.querySelector(".house").textContent = student.house;
-
     clone.querySelector(".studentimage").src = `./images/${student.lastname.toLowerCase()}_${student.firstname.substring(0,1).toLowerCase()}.png`;
 
     if (student.lastname == "Finch-fletchley") {
@@ -174,7 +173,7 @@ function displaystudents(student) {
         clone.querySelector(".studentimage").src = `./images/patil_padma.png`
 
 
-    } else if (student.firstname == "Leanne") {
+    } else if (student.firstname == "Leanne" || student.firstname == "Mateusz") {
         clone.querySelector(".studentimage").src = `./images/default.png`
 
     }
@@ -184,14 +183,18 @@ function displaystudents(student) {
     clone.querySelector(".singlestudent").addEventListener("click", () => {
         console.log("click", student);
         modal.classList.remove("hide");
+        document.querySelector("#modalcrest").alt = student.house
 
         modal.querySelector("#firstnamemodal").textContent = student.firstname;
         modal.querySelector("#middlenamemodal").textContent = student.middlename;
         modal.querySelector("#lastnamemodal").textContent = student.lastname;
         modal.querySelector("#housemodal").textContent = student.house;
         modal.querySelector("#studentgendermodal").textContent = student.gender;
+
+        // Placeholder for calculating blood status
+        let bloodarray = ["pureblood", "halfblood", "muggle"]
+        student.bloodstatus = bloodarray[Math.floor(Math.random() * bloodarray.length)];
         modal.querySelector("#bloodstatusmodal").textContent = student.bloodstatus;
-        modal.querySelector("#expelledmodal").textContent = student.expelled;
 
 
         modal.querySelector("#imagemodal").src = `./images/${student.lastname.toLowerCase()}_${student.firstname.substring(0,1).toLowerCase()}.png`;
@@ -205,7 +208,7 @@ function displaystudents(student) {
             modal.querySelector("#imagemodal").src = `./images/patil_padma.png`
 
 
-        } else if (student.firstname == "Leanne") {
+        } else if (student.firstname == "Leanne" || student.firstname == "Mateusz") {
             modal.querySelector("#imagemodal").src = `./images/default.png`
 
         }
@@ -213,32 +216,42 @@ function displaystudents(student) {
         modal.querySelector("#imagemodal").alt = student.firstname + " " + student.lastname
 
 
+
+
         if (student.house == 'Ravenclaw') {
             document.querySelector("#modal-content").classList.remove("Hufflepuff");
             document.querySelector("#modal-content").classList.remove("Slytherin");
             document.querySelector("#modal-content").classList.remove("Gryffindor");
             document.querySelector("#modal-content").classList.add("Ravenclaw");
+            document.querySelector("#modalcrest").src = `./images/crests/Ravenclaw.webp`
+
         } else if (student.house == 'Hufflepuff') {
             document.querySelector("#modal-content").classList.remove("Gryffindor");
             document.querySelector("#modal-content").classList.remove("Ravenclaw");
             document.querySelector("#modal-content").classList.remove("Slytherin");
             document.querySelector("#modal-content").classList.add("Hufflepuff");
+            document.querySelector("#modalcrest").src = `./images/crests/Hufflepuff.webp`
+
         } else if (student.house == 'Gryffindor') {
             document.querySelector("#modal-content").classList.remove("Hufflepuff");
             document.querySelector("#modal-content").classList.remove("Ravenclaw");
             document.querySelector("#modal-content").classList.remove("Slytherin");
             document.querySelector("#modal-content").classList.add("Gryffindor");
+            document.querySelector("#modalcrest").src = `./images/crests/Gryffindor.webp`
+
         } else if (student.house == 'Slytherin') {
             document.querySelector("#modal-content").classList.remove("Hufflepuff");
             document.querySelector("#modal-content").classList.remove("Ravenclaw");
             document.querySelector("#modal-content").classList.remove("Gryffindor");
             document.querySelector("#modal-content").classList.add("Slytherin");
+            document.querySelector("#modalcrest").src = `./images/crests/Slytherin.webp`
+
         }
     });
 
 
-
     document.querySelector(".templatesgohere").appendChild(clone);
+
 
 
 
@@ -254,20 +267,18 @@ function displaystudents(student) {
 
 function countstudents() {
 
-
-
     let raven = allstudents.filter(student => student.house === "Ravenclaw")
     let huff = allstudents.filter(student => student.house === "Hufflepuff")
-    let gryf = allstudents.filter(student => student.house === "Slytherin")
-    let sly = allstudents.filter(student => student.house === "Gryffindor")
+    let sly = allstudents.filter(student => student.house === "Slytherin")
+    let gryf = allstudents.filter(student => student.house === "Gryffindor")
     let expelled = allstudents.filter(student => student.expelled === true)
 
     document.querySelector("#all").innerHTML = `Students in total: ${allstudents.length}`
-    document.querySelector("#raven").innerHTML = `Ravenclaw students: ${raven.length}`
-    document.querySelector("#huff").innerHTML = `Hufflepuff students: ${huff.length}`
-    document.querySelector("#gryf").innerHTML = `Gryffindor students: ${gryf.length}`
-    document.querySelector("#sly").innerHTML = `Slytherin students: ${sly.length}`
-    document.querySelector("#expelled").innerHTML = `Expelled students: ${expelled.length}`
+    document.querySelector("#raven").innerHTML = `Ravenclaw: ${raven.length}`
+    document.querySelector("#huff").innerHTML = `Hufflepuff: ${huff.length}`
+    document.querySelector("#gryf").innerHTML = `Gryffindor: ${gryf.length}`
+    document.querySelector("#sly").innerHTML = `Slytherin: ${sly.length}`
+    document.querySelector("#expelled").innerHTML = `Expelled: ${expelled.length}`
 
 
 }
@@ -477,6 +488,41 @@ function sortlastname() {
         allstudents.forEach(displaystudents);
     }
 
+}
 
+let hackcounter = 0
+document.addEventListener("keydown", event => {
+    if (event.keyCode === 13 && hackcounter === 0) {
+        hackcounter += 1
+        hackTheSystem()
+    } else {
 
+    }
+
+});
+
+function hackTheSystem() {
+
+    alert("System have been hacked!")
+
+    let bloodarray = ["pureblood", "halfblood", "muggle"]
+    allstudents.forEach(student =>
+        student.bloodstatus = bloodarray[Math.floor(Math.random() * bloodarray.length)]
+    )
+
+    const newstudent = Object.create(students)
+    newstudent.firstname = "Mateusz"
+    newstudent.middlename = "Krzysztof"
+    newstudent.lastname = "Walowski"
+    newstudent.house = "Gryffindor"
+    newstudent.gender = "boy"
+    newstudent.bloodstatus = "pure"
+    newstudent.expelled = false
+    allstudents.unshift(newstudent)
+
+    countstudents()
+
+    document.querySelector("div.templatesgohere").innerHTML = "";
+
+    allstudents.forEach(displaystudents);
 }
