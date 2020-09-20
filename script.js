@@ -22,7 +22,7 @@ let students = {
     middlename: "",
     lastname: "",
     house: "",
-    studentgender: "",
+    gender: "",
     bloodstatus: "",
     expelled: false
 };
@@ -133,7 +133,7 @@ function preapareObject(jsonObject) {
         newstudent.house = housefixed
     }
 
-    // console.log(newstudent)
+    console.log(newstudent)
     allstudents.push(newstudent)
     // console.log(allstudents)
     return newstudent

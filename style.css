@@ -126,5 +126,9 @@
 .numbers p {
     border: 0.5px solid black;
     margin: 1em;
-    padding: 0.2em
+    padding: 0.5em
+}
+
+.title {
+    text-align: center;
 }
